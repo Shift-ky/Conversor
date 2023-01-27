@@ -3,41 +3,76 @@ package com.first.layout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
-    TextView real;
-    TextView dolar;
-    TextView euro;
-    Button conver;
+    EditText entrada;
+    TextView saida;
+    RadioGroup escolha;
+    ImageView imagen;
+    double res;
+    double real;
+    String convertido;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        real = findViewById(R.id.txt_real);
-        dolar = findViewById(R.id.txt_dolar);
-        euro = findViewById(R.id.txt_euro);
-        conver = findViewById(R.id.btn_converter);
+        entrada = findViewById(R.id.entrada);
+        saida = findViewById(R.id.saida);
+        escolha = findViewById(R.id.RgEscolha);
+        imagen = findViewById(R.id.imgSaida);
     }
 
 
 
     public void converter(View view){
-        double vlrReal = Double.parseDouble(real.getText().toString());
+        if(TextUtils.isEmpty(entrada.getText().toString())){
+            Toast.makeText(MainActivity.this,"Informe um valor para ser convertido",Toast.LENGTH_LONG);
 
-        DecimalFormat converte = new DecimalFormat("#.##");
+        }else{
+            int vlrEscolhido = escolha.getCheckedRadioButtonId();
+            real =Double.parseDouble(entrada.getText().toString());
+            DecimalFormat converter = new DecimalFormat("#.##");
+            switch (vlrEscolhido){
+                case R.id.RbDolar:
+                    convertido = converter.format(real / 5.09);
+                    saida.setText("US$ "+ convertido);
+                    imagen.setImageResource(R.drawable.dolar);
+                    break;
 
-        String convertidoDolar = converte.format(vlrReal / 5.19);
-        String convertidoEuro = converte.format(vlrReal / 5.69);
+                case R.id.RbEuro:
+                    convertido = converter.format(real  / 5.51);
+                    saida.setText("€ "+ convertido);
+                    imagen.setImageResource(R.drawable.euro);
+                    break;
 
-        dolar.setText(convertidoDolar);
-        euro.setText(convertidoEuro);
+                case R.id.RbLibra:
+                    convertido = converter.format(real  / 6.27);
+                    saida.setText("£"+ convertido);
+                    imagen.setImageResource(R.drawable.libra);
+                    break;
+                case R.id.RbYens:
+                    convertido = converter.format(real  / 0.39);
+                    saida.setText("£"+ convertido);
+                    imagen.setImageResource(R.drawable.yen);
+                    break;
+                default:
+                    Toast.makeText(MainActivity.this,"Escolha uma moeda para ser convertido",Toast.LENGTH_LONG);
+                    break;
+            }
+
+        }
     }
-
 
 }
