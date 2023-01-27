@@ -8,7 +8,7 @@ Aplicativo criado para converter de Real para Iene, Euro, Dolar e Libra esterlin
 * Github
 ## Getting started
 * Clone the repository.
-$ git clone https://github.com/Shift-ky/PrimeiroApp
+$ git clone https://github.com/Shift-ky/Conversor
 
 
 ## Links
